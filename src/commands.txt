@@ -1,0 +1,4 @@
+Run these commands from the .../src/ folder to
+
+compile: javac */*.java
+run: java main.Main
