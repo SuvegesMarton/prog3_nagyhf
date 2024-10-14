@@ -27,6 +27,18 @@ public class Grid {
 	public boolean getIsHardCoded(int x, int y) {
 		return this.isHardcoded[xyToScalar(x, y)];
 	}
+
+	public void setValue(int x, int y, int newValue) {
+		if (newValue<0 || this.gridSizeBase*this.gridSizeBase<newValue) {
+			throw new IllegalArgumentException("Field value out of the legal domain.");
+		}
+		this.values[xyToScalar(x, y)] = newValue;
+	}
+	
+	public void setIsHardCoded(int x, int y, boolean newSetting) {
+		this.isHardcoded[xyToScalar(x, y)] = newSetting;
+	}
+
     public static void print() {
 		System.out.println("Hello Grid!");
 	}
