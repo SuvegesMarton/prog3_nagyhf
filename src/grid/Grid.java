@@ -1,9 +1,12 @@
 package grid;
 
+import java.io.*;
+
 public class Grid {
 	private final int gridSizeBase;
 	private int[] values;
 	private boolean[] isHardcoded;
+	private static String ioFilePath = "../data/stored_grids.txt";
 
 	public Grid(int gridSizeBase) {
 		this.gridSizeBase = gridSizeBase;
@@ -39,7 +42,11 @@ public class Grid {
 		this.isHardcoded[xyToScalar(x, y)] = newSetting;
 	}
 
-    public static void print() {
-		System.out.println("Hello Grid!");
+    public void saveToFile() {
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(ioFilePath))) {
+            writer.write("Hello, World!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 }
