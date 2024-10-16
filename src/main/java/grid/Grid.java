@@ -1,12 +1,15 @@
 package grid;
 
 import java.io.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class Grid {
+	private String id;
 	private final int gridSizeBase;
 	private int[] values;
 	private boolean[] isHardcoded;
-	private static String ioFilePath = "src/main/resources/stored_grids.txt";
+	private static String ioFilePath = "src/main/resources/stored_grids.json";
 
 	public Grid(int gridSizeBase) {
 		this.gridSizeBase = gridSizeBase;
@@ -42,26 +45,25 @@ public class Grid {
 		this.isHardcoded[xyToScalar(x, y)] = newSetting;
 	}
 
-    public void saveToFile(int saveId) {
-		try (PrintWriter writer = new PrintWriter(new FileWriter(ioFilePath, true))) { //open in append mode
-			//write ID
-			writer.println("\nGRID ID: " + saveId);
-			//write grid size base
-			writer.println("GRID SIZE BASE: " + this.gridSizeBase);
-			//write values
-			for (int n : this.values) {
-				writer.print(n);
-			}
-			writer.println();
-			//write is-hard-coded values
-			for (boolean b : this.isHardcoded) {
-				if (b) {writer.print("1");}
-				else {writer.print("0");}
-			}
-			writer.println();
+    public void saveToJSON() {
+try {
+            // Create a Gson instance with pretty printing
+            Gson gson = new GsonBuilder().create();
 
-        } catch (IOException e) {
+
+            // Convert the Java object to JSON and write it to a file
+            FileWriter writer = new FileWriter("src/main/resources/stored_grids.json", false);
+            gson.toJson(this, writer);
+
+            // Close the writer
+            writer.close();
+
+            System.out.println("JSON written to file successfully.");
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
+		
 	}
+	
 }
