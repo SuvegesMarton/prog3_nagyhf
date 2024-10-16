@@ -15,6 +15,8 @@ class Main {
 		Grid c = io.loadFromJSON("macska");
 		System.out.println(b.getValue(3, 2));
 		System.out.println(c.getValue(3, 2));
+		System.out.println(c.isLegal());
+
 
 	}
 }
