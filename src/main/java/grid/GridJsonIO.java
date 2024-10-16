@@ -1,27 +1,44 @@
 package grid;
 
 
-import java.io.*;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 
 public class GridJsonIO {
-    private static String ioFilePath = "src/main/resources/stored_grids.json";
+    private static final Type gridListType = new TypeToken<List<Grid>>(){}.getType();
+    private static final String ioFilePath = "src/main/resources/stored_grids.json";
 
 public void saveToJSON(Grid grid) {
 		try {
-            // Create a Gson instance with pretty printing
-            Gson gson = new GsonBuilder().create();
+            // Create Gson instance
+            Gson gson = new Gson();
+
+            // Read the JSON array from file and convert it to a list of Person objects
+            FileReader reader = new FileReader(ioFilePath);
+            List<Grid> grids = gson.fromJson(reader, gridListType);
+            reader.close();
+            
+            //Try to find the searched ID
+            boolean found = false;
+            for (int i=0; i<grids.size(); i++) {
+                if (grids.get(i).getID().equals(grid.getID())) { //
+                    found = true;
+                    grids.set(i, grid);
+                }
+            }
+            if (!found) {
+                grids.add(grid);
+            }
 
             // Convert the Java object to JSON and write it to a file
-            FileWriter writer = new FileWriter(ioFilePath, true);
-            gson.toJson(grid, writer);
-            writer.write('\n');
-            // Close the writer
+            FileWriter writer = new FileWriter(ioFilePath);
+            gson.toJson(grids, writer);
             writer.close();
 
             System.out.println("JSON written to file successfully.");
@@ -36,26 +53,23 @@ public Grid loadFromJSON(String id) {
             // Create Gson instance
             Gson gson = new Gson();
 
-            // Define the type for List<Person>
-            Type gridListType = new TypeToken<List<Grid>>(){}.getType();
-
-            // Read the JSON array from file and convert it to a list of Person objects
+            // Read the JSON array from file and convert it to a list of Grid objects
             FileReader reader = new FileReader(ioFilePath);
             List<Grid> grids = gson.fromJson(reader, gridListType);
-
-            // Close the reader
             reader.close();
 
-            // Access the list of people
+            // Iterate on the Grids list to find the correct ID.
             for (Grid g : grids) {
-                if (g.getID().equals(id)) return g;
+                if (g.getID().equals(id)) {
+                    return g;
+                }
             }
-
-            return new Grid("a",1);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new Grid("b",3);
+
+        // If the search did not succeed, or some Exceptions were thrown&catched, create a "default" empty Grid.
+        return new Grid("default", 3);
+
     }
 }
