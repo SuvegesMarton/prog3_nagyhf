@@ -40,9 +40,6 @@ public void saveToJSON(Grid grid) {
             FileWriter writer = new FileWriter(ioFilePath);
             gson.toJson(grids, writer);
             writer.close();
-
-            System.out.println("JSON written to file successfully.");
-
         } catch (Exception e) {
             e.printStackTrace();
         }
