@@ -14,6 +14,14 @@ public class Grid {
 		this.isHardcoded = new boolean[numberOfFields];
 	}
 
+	public Grid(String id) {
+		this.id = id;
+		this.gridSizeBase = 3;
+		int numberOfFields = (int)Math.pow(gridSizeBase, 4);
+		this.values = new int[numberOfFields];
+		this.isHardcoded = new boolean[numberOfFields];
+	}
+
 	private int xyToScalar(int x, int y) {
 		return y*this.gridSizeBase*this.gridSizeBase + x;
 	}
