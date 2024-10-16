@@ -1,13 +1,13 @@
 package grid;
 
 public class Grid {
-	private String id;
+	private final String id;
 	private final int gridSizeBase;
 	private int[] values;
 	private boolean[] isHardcoded;
-	private static String ioFilePath = "src/main/resources/stored_grids.json";
 
-	public Grid(int gridSizeBase) {
+	public Grid(String id, int gridSizeBase) {
+		this.id = id;
 		this.gridSizeBase = gridSizeBase;
 		int numberOfFields = (int)Math.pow(gridSizeBase, 4);
 		this.values = new int[numberOfFields];
@@ -16,6 +16,10 @@ public class Grid {
 
 	private int xyToScalar(int x, int y) {
 		return y*this.gridSizeBase*this.gridSizeBase + x;
+	}
+
+	public String getID() {
+		return this.id;
 	}
 
 	public int getGridSizeBase() {

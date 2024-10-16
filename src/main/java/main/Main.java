@@ -5,8 +5,8 @@ import grid.GridJsonIO;
 
 class Main {
     public static void main(String[] args) {
-		Grid a = new Grid(3);
+		Grid a = new Grid("monke", 3);
 		GridJsonIO io = new GridJsonIO();
-		io.saveToJSON(a);
+		io.loadFromJSON("monke");
 	}
 }
