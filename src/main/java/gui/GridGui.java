@@ -1,11 +1,15 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -89,6 +93,25 @@ public class GridGui {
 
         // Add the panel to the main window
         frame.add(panel);
+
+        JPanel controlPanel = new JPanel();
+        controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.X_AXIS)); // Vertical layout
+
+        // Add a button
+        JButton button = new JButton("Save");
+        controlPanel.add(button);
+
+        // Add a label
+        JLabel label = new JLabel("         With grid ID: ");
+        controlPanel.add(label);
+
+        // Add a text field
+        JTextField inputField = new JTextField(10);
+        inputField.setText(grid.getID());
+        controlPanel.add(inputField);
+
+        // Add the control panel to the bottom of the frame
+        frame.add(controlPanel, BorderLayout.SOUTH);
 
         // Set the window to be visible
         frame.setVisible(true);
