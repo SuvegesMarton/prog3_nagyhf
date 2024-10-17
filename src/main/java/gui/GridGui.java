@@ -4,7 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.*;
 
+import javax.swing.*;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -17,13 +19,18 @@ import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import grid.Grid;
+import grid.GridJsonIO;
 
 public class GridGui {
     private Grid grid;
     private final int gridBase;
     private final int gridSize;
     private JTextField[][] sudokuCells;
+    private JTextField saveIDInputField;
     private boolean userInput = true;
 
 
@@ -100,15 +107,21 @@ public class GridGui {
         // Add a button
         JButton button = new JButton("Save");
         controlPanel.add(button);
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saveButtonClicked();
+            }
+        });
 
         // Add a label
         JLabel label = new JLabel("         With grid ID: ");
         controlPanel.add(label);
 
         // Add a text field
-        JTextField inputField = new JTextField(10);
-        inputField.setText(grid.getID());
-        controlPanel.add(inputField);
+         saveIDInputField = new JTextField(10);
+        saveIDInputField.setText(grid.getID());
+        controlPanel.add(saveIDInputField);
 
         // Add the control panel to the bottom of the frame
         frame.add(controlPanel, BorderLayout.SOUTH);
@@ -119,7 +132,7 @@ public class GridGui {
         this.updateGUI();
     }
 
-    public void updateGUI() {
+    private void updateGUI() {
         userInput = false;
         for (int i=0;i<gridSize;i++) {
             for (int j=0;j<gridSize;j++) {
@@ -137,7 +150,7 @@ public class GridGui {
     }
 
     //update only grid.values. updating gui is another step!
-    public void handleGridUpdate (DocumentEvent e) {
+    private void handleGridUpdate (DocumentEvent e) {
         // Get the updated component (JTextField)
         JTextField updatedCell = (JTextField) e.getDocument().getProperty("owner");
 
@@ -154,4 +167,10 @@ public class GridGui {
         this.grid.setValue(row, col, c - '0');
     }
 
+    private void saveButtonClicked() {
+        String saveID = this.saveIDInputField.getText();
+        this.grid.setID(saveID);
+        GridJsonIO io = new GridJsonIO();
+        io.saveToJSON(this.grid);
+    }
 }

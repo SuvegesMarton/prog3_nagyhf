@@ -45,6 +45,10 @@ public class Grid {
 		this.isHardcoded[xyToScalar(x, y)] = newSetting;
 	}
 
+	public void setID(String newID) {
+		this.id = newID;
+	}
+
 	//may be unfinished, but all set values are legal
 	public boolean isLegal() {
 		int sideLength = this.gridSizeBase*this.gridSizeBase;
