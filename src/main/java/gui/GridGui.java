@@ -16,6 +16,9 @@ public class GridGui {
     private Grid grid;
     private final int gridBase;
     private final int gridSize;
+    private JTextField[][] sudokuCells;
+
+
     public GridGui(Grid grid) {
         this.grid = grid;
         gridBase = this.grid.getGridSizeBase();
@@ -24,7 +27,7 @@ public class GridGui {
 
     public void makeWindow() {
         // Create the main window (JFrame)
-        JFrame frame = new JFrame("Sudoku");
+        JFrame frame = new JFrame("Sudoku - Grid ID: " + grid.getID());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 600);
         
@@ -33,7 +36,7 @@ public class GridGui {
         panel.setLayout(new GridLayout(gridSize, gridSize));
 
         // Create a 9x9 grid of JTextFields
-        JTextField[][] sudokuCells = new JTextField[gridSize][gridSize];
+        sudokuCells = new JTextField[gridSize][gridSize];
 
         // Initialize each JTextField and add it to the panel
         for (int row = 0; row < gridSize; row++) {
@@ -41,8 +44,8 @@ public class GridGui {
                 JTextField cell = new JTextField();
                 cell.setHorizontalAlignment(JTextField.CENTER); // Center the text
                 cell.setFont(new Font("Arial", Font.BOLD, 35)); // Set font size
-                panel.add(cell);
                 sudokuCells[row][col] = cell;
+                panel.add(cell);
 
                 // Set the borders to highlight 3x3 subgrids
                 Border outerBorder = BorderFactory.createMatteBorder(
@@ -72,5 +75,22 @@ public class GridGui {
 
         // Set the window to be visible
         frame.setVisible(true);
+
+        this.updateValues();
+    }
+
+    public void updateValues() {
+        for (int i=0;i<gridSize;i++) {
+            for (int j=0;j<gridSize;j++) {
+            int value = this.grid.getValue(i, j);
+            if (value != 0) {
+                this.sudokuCells[j][i].setText(String.valueOf(value));
+            }
+            else {
+                this.sudokuCells[j][i].setText("");
+
+            }
+        }
+        }
     }
 }
