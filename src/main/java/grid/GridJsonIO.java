@@ -66,7 +66,7 @@ public Grid loadFromJSON(String id) {
         }
 
         // If the search did not succeed, or some Exceptions were thrown&catched, create a "default" empty Grid.
-        return new Grid("default", 3);
+        return new Grid(id, 3);
 
     }
 }

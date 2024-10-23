@@ -29,18 +29,10 @@ public class GridGui {
     private JTextField[][] sudokuCells;
     private JTextField saveIDInputField;
     private boolean userInput = true;
-    private final boolean editMode;
 
 
     public GridGui(Grid grid) {
         this.editMode = false;
-        this.grid = grid;
-        gridBase = this.grid.getGridSizeBase();
-        gridSize = gridBase*gridBase;
-    }
-
-    public GridGui(Grid grid, boolean editMode) {
-        this.editMode = editMode;
         this.grid = grid;
         gridBase = this.grid.getGridSizeBase();
         gridSize = gridBase*gridBase;
@@ -107,9 +99,8 @@ public class GridGui {
         // Add the panel to the main window
         frame.add(panel);
 
-        if (editMode) {
-            addControlBar(frame);   
-        }
+        addControlBar(frame);   
+        
 
         // Set the window to be visible
         frame.setVisible(true);
