@@ -4,9 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.*;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -19,9 +19,6 @@ import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import grid.Grid;
 import grid.GridJsonIO;
 
@@ -32,9 +29,18 @@ public class GridGui {
     private JTextField[][] sudokuCells;
     private JTextField saveIDInputField;
     private boolean userInput = true;
+    private final boolean editMode;
 
 
     public GridGui(Grid grid) {
+        this.editMode = false;
+        this.grid = grid;
+        gridBase = this.grid.getGridSizeBase();
+        gridSize = gridBase*gridBase;
+    }
+
+    public GridGui(Grid grid, boolean editMode) {
+        this.editMode = editMode;
         this.grid = grid;
         gridBase = this.grid.getGridSizeBase();
         gridSize = gridBase*gridBase;
@@ -101,30 +107,9 @@ public class GridGui {
         // Add the panel to the main window
         frame.add(panel);
 
-        JPanel controlPanel = new JPanel();
-        controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.X_AXIS)); // Vertical layout
-
-        // Add a button
-        JButton button = new JButton("Save");
-        controlPanel.add(button);
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                saveButtonClicked();
-            }
-        });
-
-        // Add a label
-        JLabel label = new JLabel("         With grid ID: ");
-        controlPanel.add(label);
-
-        // Add a text field
-         saveIDInputField = new JTextField(10);
-        saveIDInputField.setText(grid.getID());
-        controlPanel.add(saveIDInputField);
-
-        // Add the control panel to the bottom of the frame
-        frame.add(controlPanel, BorderLayout.SOUTH);
+        if (editMode) {
+            addControlBar(frame);   
+        }
 
         // Set the window to be visible
         frame.setVisible(true);
@@ -165,6 +150,43 @@ public class GridGui {
         char c = newValue.charAt(newValue.length() - 1);
         if (!Character.isDigit(c)) {this.grid.setValue(row, col, 0); return;}
         this.grid.setValue(row, col, c - '0');
+    }
+
+    private void addControlBar(JFrame frame) {
+        JPanel controlPanel = new JPanel();
+            controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.X_AXIS)); // Vertical layout
+
+            // Add a second button
+            JButton button2 = new JButton("Exit");
+            controlPanel.add(button2);
+            button2.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    frame.dispose();
+                }
+            });
+
+            // Add a button
+            JButton button = new JButton("Save");
+            controlPanel.add(button);
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    saveButtonClicked();
+                }
+            });
+
+            // Add a label
+            JLabel label = new JLabel("         With grid ID: ");
+            controlPanel.add(label);
+
+            // Add a text field
+            saveIDInputField = new JTextField(10);
+            saveIDInputField.setText(grid.getID());
+            controlPanel.add(saveIDInputField);
+
+            // Add the control panel to the bottom of the frame
+            frame.add(controlPanel, BorderLayout.SOUTH);
     }
 
     private void saveButtonClicked() {
