@@ -19,7 +19,7 @@ public void saveToJSON(Grid grid) {
             // Create Gson instance
             Gson gson = new Gson();
 
-            // Read the JSON array from file and convert it to a list of Person objects
+            // Read the JSON array from file and convert it to a list of grid objects
             FileReader reader = new FileReader(ioFilePath);
             List<Grid> grids = gson.fromJson(reader, gridListType);
             reader.close();
@@ -30,6 +30,7 @@ public void saveToJSON(Grid grid) {
                 if (grids.get(i).getID().equals(grid.getID())) { //
                     found = true;
                     grids.set(i, grid);
+                    break;
                 }
             }
             if (!found) {

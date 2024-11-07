@@ -22,7 +22,7 @@ import javax.swing.event.DocumentListener;
 import grid.Grid;
 import grid.GridJsonIO;
 
-public class GridGui {
+public class SolveGui {
     private Grid grid;
     private final int gridBase;
     private final int gridSize;
@@ -31,8 +31,7 @@ public class GridGui {
     private boolean userInput = true;
 
 
-    public GridGui(Grid grid) {
-        this.editMode = false;
+    public SolveGui(Grid grid) {
         this.grid = grid;
         gridBase = this.grid.getGridSizeBase();
         gridSize = gridBase*gridBase;
@@ -118,7 +117,14 @@ public class GridGui {
                 }
                 else {
                     this.sudokuCells[j][i].setText("");
+                }
 
+                if (this.grid.getIsHardCoded(i, j)) {
+                    this.sudokuCells[j][i].setBackground(Color.LIGHT_GRAY);
+                    this.sudokuCells[j][i].setEditable(false);
+                } else {
+                    this.sudokuCells[j][i].setBackground(Color.WHITE);
+                    this.sudokuCells[j][i].setEditable(true);
                 }
             }
         }

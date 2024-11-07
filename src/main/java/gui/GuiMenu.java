@@ -1,12 +1,16 @@
 package gui;
 
-import javax.swing.*;
-import java.awt.*;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import grid.Grid;
 import grid.GridJsonIO;
@@ -60,6 +64,14 @@ public class GuiMenu extends JFrame {
             }
         });
 
+        button2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Update the label with new text when button1 is clicked
+                solve(textField.getText());
+            }
+        });
+
         // Add components to the frame
         add(buttonPanel, BorderLayout.NORTH);       // Buttons at the top
         add(displayLabel, BorderLayout.CENTER);         // Text area in the middle
@@ -73,12 +85,17 @@ public class GuiMenu extends JFrame {
     }
 
 
-    public void edit(String id) {
-        System.out.println(id);
+    public void solve(String id) {
         GridJsonIO io = new GridJsonIO();
         Grid b = io.loadFromJSON(id);
-        System.out.println(b.getID());
-		GridGui gg = new GridGui(b, true);
-		gg.makeWindow();
+		SolveGui sg = new SolveGui(b);
+		sg.makeWindow();
+    }
+
+    public void edit(String id) {
+        GridJsonIO io = new GridJsonIO();
+        Grid b = io.loadFromJSON(id);
+		EditGui eg = new EditGui(b);
+		eg.makeWindow();
     }
 }
