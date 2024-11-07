@@ -1,7 +1,5 @@
 package main;
 
-import gui.GuiMenu;
-
 class Main {
     public static void main(String[] args) {
 		GuiMenu gm = new GuiMenu();

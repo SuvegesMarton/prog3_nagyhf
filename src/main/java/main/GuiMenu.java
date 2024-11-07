@@ -1,4 +1,4 @@
-package gui;
+package main;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -14,7 +14,8 @@ import javax.swing.JTextField;
 
 import grid.Grid;
 import grid.GridJsonIO;
-//import gui.GridGui;
+
+import gui.*;
 
 public class GuiMenu extends JFrame {
     public GuiMenu() {
@@ -88,14 +89,14 @@ public class GuiMenu extends JFrame {
     public void solve(String id) {
         GridJsonIO io = new GridJsonIO();
         Grid b = io.loadFromJSON(id);
-		SolveGui sg = new SolveGui(b);
+		GridGui sg = new SolveGui(b);
 		sg.makeWindow();
     }
 
     public void edit(String id) {
         GridJsonIO io = new GridJsonIO();
         Grid b = io.loadFromJSON(id);
-		EditGui eg = new EditGui(b);
+		GridGui eg = new EditGui(b);
 		eg.makeWindow();
     }
 }
