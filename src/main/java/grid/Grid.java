@@ -67,11 +67,10 @@ public class Grid {
 				if (checkedValue==0) {
 					continue;
 				}
-				for (int temp_y =y;temp_y<sideLength;temp_y++) {
+				for (int temp_y=y+1;temp_y<sideLength;temp_y++) {
 					if (this.getValue(x, temp_y) == checkedValue) {
 						return false;
 					}
-					
 				}
 			}
 		}
@@ -82,8 +81,8 @@ public class Grid {
 				if (checkedValue==0) {
 					continue;
 				}
-				for (int temp_x=x;temp_x<sideLength;temp_x++) {
-					if (this.getValue(x, temp_x) == checkedValue) {
+				for (int temp_x=x+1;temp_x<sideLength;temp_x++) {
+					if (this.getValue(temp_x, y) == checkedValue) {
 						return false;
 					}
 					
@@ -98,17 +97,17 @@ public class Grid {
 				//collect the values from the box to make rule checking easier
 				for (int yInBox=0;yInBox<this.gridSizeBase;yInBox++) {
 					for (int xInBox=0;xInBox<this.gridSizeBase;xInBox++) {
-						valuesInBox[i] = this.getValue(x+xInBox, y+yInBox);
+						valuesInBox[i] = this.getValue(gridSizeBase*x+xInBox, gridSizeBase*y+yInBox);
 						i += 1;
 					}
 				}
 				//perform the check
 				for (int j=0;j<sideLength;j++) {
-					int checkedValue = valuesInBox[i];
+					int checkedValue = valuesInBox[j];
 					if (checkedValue == 0) {
 						continue;
 					}
-					for (int k=j;k<sideLength;k++) {
+					for (int k=j+1;k<sideLength;k++) {
 						if (valuesInBox[k]==checkedValue) {
 							return false;
 						}
