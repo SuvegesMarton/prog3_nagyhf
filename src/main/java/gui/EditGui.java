@@ -163,7 +163,7 @@ public class EditGui {
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    saveButtonClicked();
+                    buttonClicked();
                 }
             });
 
@@ -180,7 +180,7 @@ public class EditGui {
             frame.add(controlPanel, BorderLayout.SOUTH);
     }
 
-    private void saveButtonClicked() {
+    private void buttonClicked() {
         String saveID = this.saveIDInputField.getText();
         this.grid.setID(saveID);
         GridJsonIO io = new GridJsonIO();

@@ -11,7 +11,6 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -21,13 +20,14 @@ import javax.swing.event.DocumentListener;
 
 import grid.Grid;
 import grid.GridJsonIO;
+import sun.nio.cs.TIS_620;
 
 public class SolveGui {
     private Grid grid;
     private final int gridBase;
     private final int gridSize;
     private JTextField[][] sudokuCells;
-    private JTextField saveIDInputField;
+    private JTextField feedbackField;
     private boolean userInput = true;
 
 
@@ -128,6 +128,8 @@ public class SolveGui {
                 }
             }
         }
+        this.feedbackField.setText("Untested position.");
+
         userInput = true;
     }
 
@@ -164,32 +166,33 @@ public class SolveGui {
             });
 
             // Add a button
-            JButton button = new JButton("Save");
+            JButton button = new JButton("Check");
             controlPanel.add(button);
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    saveButtonClicked();
+                    buttonClicked();
                 }
             });
 
-            // Add a label
-            JLabel label = new JLabel("         With grid ID: ");
-            controlPanel.add(label);
+
 
             // Add a text field
-            saveIDInputField = new JTextField(10);
-            saveIDInputField.setText(grid.getID());
-            controlPanel.add(saveIDInputField);
+            this.feedbackField = new JTextField(10);
+            this.feedbackField.setText("Untested position.");
+    
+            controlPanel.add(this.feedbackField);
 
             // Add the control panel to the bottom of the frame
             frame.add(controlPanel, BorderLayout.SOUTH);
     }
 
-    private void saveButtonClicked() {
-        String saveID = this.saveIDInputField.getText();
-        this.grid.setID(saveID);
-        GridJsonIO io = new GridJsonIO();
-        io.saveToJSON(this.grid);
+    private void buttonClicked() {
+        if (this.grid.isLegal()) {
+            this.feedbackField.setText("This solution breaks no rules.");
+        }
+        else {
+            this.feedbackField.setText("This solution breaks at least 1 rule.");
+        }
     }
 }

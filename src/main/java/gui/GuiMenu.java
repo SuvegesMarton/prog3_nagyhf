@@ -19,7 +19,7 @@ import grid.GridJsonIO;
 public class GuiMenu extends JFrame {
     public GuiMenu() {
         // Set the title of the window
-        super("Simple GUI");
+        super("Sudoku Master 2000");
 
         // Set layout manager for the frame (using BorderLayout)
         setLayout(new BorderLayout(10, 10));
