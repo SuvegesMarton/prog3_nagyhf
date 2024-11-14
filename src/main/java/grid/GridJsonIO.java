@@ -14,7 +14,7 @@ public class GridJsonIO {
     private static final Type gridListType = new TypeToken<List<Grid>>(){}.getType();
     private static final String ioFilePath = "src/main/resources/stored_grids.json";
 
-public void saveToJSON(Grid grid) {
+public static void saveToJSON(Grid grid) {
 		try {
             // Create Gson instance
             Gson gson = new Gson();
@@ -46,7 +46,7 @@ public void saveToJSON(Grid grid) {
         }
 	}
 
-public Grid loadFromJSON(String id) {
+public static Grid loadFromJSON(String id) {
     try {
             // Create Gson instance
             Gson gson = new Gson();

@@ -57,65 +57,10 @@ public class Grid {
 		this.id = newID;
 	}
 
-	//may be unfinished, but all set values are legal
+	//the grid may or may not be finished, but no rules are broken yet.
 	public boolean isLegal() {
-		int sideLength = this.gridSizeBase*this.gridSizeBase;
-		//check columns
-		for (int x=0; x<sideLength;x++) {
-			for (int y=0; y<sideLength;y++){
-				int checkedValue = this.getValue(x, y);
-				if (checkedValue==0) {
-					continue;
-				}
-				for (int temp_y=y+1;temp_y<sideLength;temp_y++) {
-					if (this.getValue(x, temp_y) == checkedValue) {
-						return false;
-					}
-				}
-			}
-		}
-		//check rows
-		for (int y=0; y<sideLength;y++) {
-			for (int x=0; x<sideLength;x++){
-				int checkedValue = this.getValue(x, y);
-				if (checkedValue==0) {
-					continue;
-				}
-				for (int temp_x=x+1;temp_x<sideLength;temp_x++) {
-					if (this.getValue(temp_x, y) == checkedValue) {
-						return false;
-					}
-					
-				}
-			}
-		}
-		//check boxes
-		int[] valuesInBox = new int[sideLength*sideLength];
-		for (int y=0; y<this.gridSizeBase;y++) {
-			for (int x=0; x<this.gridSizeBase;x++){
-				int i = 0;
-				//collect the values from the box to make rule checking easier
-				for (int yInBox=0;yInBox<this.gridSizeBase;yInBox++) {
-					for (int xInBox=0;xInBox<this.gridSizeBase;xInBox++) {
-						valuesInBox[i] = this.getValue(gridSizeBase*x+xInBox, gridSizeBase*y+yInBox);
-						i += 1;
-					}
-				}
-				//perform the check
-				for (int j=0;j<sideLength;j++) {
-					int checkedValue = valuesInBox[j];
-					if (checkedValue == 0) {
-						continue;
-					}
-					for (int k=j+1;k<sideLength;k++) {
-						if (valuesInBox[k]==checkedValue) {
-							return false;
-						}
-					}
-				}
-			}
-		}
-		//if all criteria are met, the grid's values are legal.
-		return true;
+		return ValidityChecks.checkBoxRule(this) &&
+			   ValidityChecks.checkColumnRule(this) &&
+			   ValidityChecks.checkRowRule(this);
 	}
 }

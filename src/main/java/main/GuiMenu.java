@@ -87,15 +87,13 @@ public class GuiMenu extends JFrame {
 
 
     public void solve(String id) {
-        GridJsonIO io = new GridJsonIO();
-        Grid b = io.loadFromJSON(id);
+        Grid b = GridJsonIO.loadFromJSON(id);
 		GridGui sg = new SolveGui(b);
 		sg.makeWindow();
     }
 
     public void edit(String id) {
-        GridJsonIO io = new GridJsonIO();
-        Grid b = io.loadFromJSON(id);
+        Grid b = GridJsonIO.loadFromJSON(id);
 		GridGui eg = new EditGui(b);
 		eg.makeWindow();
     }
