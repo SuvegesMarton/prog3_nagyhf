@@ -1,11 +1,20 @@
 package grid;
-
+/**
+ * This class holds all attributes for a single Grid (one specific sudoku puzzle).
+ * name/id - string name of the grid
+ * gridSizeBase - the default, well-known sudoku is based on 3x3 boxes, and 3x3 of these boxes. This implementation lets the grid size base number be other numbers aswell, not just 3 with this variable.
+ * values - 1d list of the values in the grid.
+ * isHardcoded - describes whether a value is the puzzle's or the solution's part. hardcoded values cannot be changed in solve mode.
+ */
 public class Grid {
 	private String id;
 	private final int gridSizeBase;
 	private int[] values;
 	private boolean[] isHardcoded;
-
+	/**
+	 * @param id name of the puzzle
+	 * @param gridSizeBase the default, well-known sudoku is based on 3x3 boxes, and 3x3 of these boxes. This implementation lets the grid size base number be other numbers aswell, not just 3.
+	 */
 	public Grid(String id, int gridSizeBase) {
 		this.id = id;
 		this.gridSizeBase = gridSizeBase;
@@ -13,7 +22,9 @@ public class Grid {
 		this.values = new int[numberOfFields];
 		this.isHardcoded = new boolean[numberOfFields];
 	}
-
+	/**
+	 * @param id name of the puzzle
+	 */
 	public Grid(String id) {
 		this.id = id;
 		this.gridSizeBase = 3;
@@ -21,7 +32,10 @@ public class Grid {
 		this.values = new int[numberOfFields];
 		this.isHardcoded = new boolean[numberOfFields];
 	}
-
+	/**
+	 * gets xy coordinates on the sudoku grid
+	 * @return scalar value, more fit for using with the grids internal representation.
+	 */
 	private int xyToScalar(int x, int y) {
 		return y*this.gridSizeBase*this.gridSizeBase + x;
 	}
@@ -57,7 +71,9 @@ public class Grid {
 		this.id = newID;
 	}
 
-	//the grid may or may not be finished, but no rules are broken yet.
+	/**
+	 * determines if the grid is legal by applying the 3 sudoku rules (row, column, box). unfinished grids can be legal if they don't break the rules.
+	 */
 	public boolean isLegal() {
 		return ValidityChecks.checkBoxRule(this) &&
 			   ValidityChecks.checkColumnRule(this) &&

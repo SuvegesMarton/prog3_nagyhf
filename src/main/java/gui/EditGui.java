@@ -14,11 +14,17 @@ import javax.swing.JTextField;
 import grid.Grid;
 import grid.GridJsonIO;
 
+/**
+ * GUI and backend operations for editing and saving a sudoku puzzle/grid.
+ */
 public class EditGui extends GridGui {
     public EditGui(Grid grid) {
         super(grid);
     }
 
+    /**
+     * updates GUI as well as the stored grid's isHardCoded values.
+     */
     @Override
     protected void updateGUI() {
         userInput = false;
@@ -38,6 +44,9 @@ public class EditGui extends GridGui {
         userInput = true;
     }
 
+    /**
+     * adds interface under the grid GUI, to save grid or exit editor mode. also allows to give new name to the grid (save as... function)
+     */
     @Override
     protected void addControlBar(JFrame frame) {
         JPanel controlPanel = new JPanel();
@@ -76,6 +85,9 @@ public class EditGui extends GridGui {
             frame.add(controlPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * gets called upon save button getting clicked: saves current state with the given name (id).
+     */
     @Override
     protected void buttonClicked() {
         String saveID = this.bottomTextField.getText();

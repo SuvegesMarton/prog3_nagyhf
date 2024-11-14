@@ -12,12 +12,17 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import grid.Grid;
-
+/**
+ * GUI and backend operations for solving a sudoku puzzle/grid.
+ */
 public class SolveGui extends GridGui {
     public SolveGui(Grid grid){
         super(grid);
     }
 
+    /**
+     * updates GUI, and shows hardcoded fields in grey to make solving somewhat easier.
+     */
     @Override
     protected void updateGUI() {
         userInput = false;
@@ -45,6 +50,9 @@ public class SolveGui extends GridGui {
         userInput = true;
     }
 
+    /**
+     * adds interface under the grid GUI, to check grid or exit editor mode.
+     */
     protected void addControlBar(JFrame frame) {
         JPanel controlPanel = new JPanel();
             controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.X_AXIS)); // Vertical layout
@@ -69,8 +77,6 @@ public class SolveGui extends GridGui {
                 }
             });
 
-
-
             // Add a text field
             this.bottomTextField = new JTextField(10);
             this.bottomTextField.setText("Untested position.");
@@ -80,7 +86,9 @@ public class SolveGui extends GridGui {
             // Add the control panel to the bottom of the frame
             frame.add(controlPanel, BorderLayout.SOUTH);
     }
-
+    /**
+     * gets called upon check button getting clicked: decides if the current state of the grid breaks any rules.
+     */
     protected void buttonClicked() {
         if (this.grid.isLegal()) {
             this.bottomTextField.setText("This solution breaks no rules.");

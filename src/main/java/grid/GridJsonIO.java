@@ -9,12 +9,17 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-
+/**
+ * class for handling grid saving and loading with JSON.
+ */
 public class GridJsonIO {
     private static final Type gridListType = new TypeToken<List<Grid>>(){}.getType();
     private static final String ioFilePath = "src/main/resources/stored_grids.json";
 
-public static void saveToJSON(Grid grid) {
+    /**
+     * save a grid to a json file. if a grid with that name is already saved, overwrite it.
+     */
+    public static void saveToJSON(Grid grid) {
 		try {
             // Create Gson instance
             Gson gson = new Gson();
@@ -45,9 +50,11 @@ public static void saveToJSON(Grid grid) {
             e.printStackTrace();
         }
 	}
-
-public static Grid loadFromJSON(String id) {
-    try {
+    /**
+     * load a grid from a JSON file. If a grid with the specified name does not exist, create a new grid (3x3 grid size base) with the given name.
+     */
+    public static Grid loadFromJSON(String id) {
+        try {
             // Create Gson instance
             Gson gson = new Gson();
 

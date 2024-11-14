@@ -17,7 +17,14 @@ import grid.GridJsonIO;
 
 import gui.*;
 
+/**
+ * This class creates and manages the game menu GUI. it inherist form the JFrame class for the sake of simplicity.
+ */
+
 public class GuiMenu extends JFrame {
+    /**
+     * the constructor creates the GUI, and prepares to handle actions performed through it. The buttons are set to call their respective functions.
+     */
     public GuiMenu() {
         // Set the title of the window
         super("Sudoku Master 2000");
@@ -85,13 +92,18 @@ public class GuiMenu extends JFrame {
         setVisible(true);
     }
 
-
+    /**
+     * load the specified GUI from JSON, and create a grid solver GUI to manipulate it.
+     */
     public void solve(String id) {
         Grid b = GridJsonIO.loadFromJSON(id);
 		GridGui sg = new SolveGui(b);
 		sg.makeWindow();
     }
 
+    /**
+     * load the specified GUI from JSON, and create a grid editor GUI to manipulate it.
+     */
     public void edit(String id) {
         Grid b = GridJsonIO.loadFromJSON(id);
 		GridGui eg = new EditGui(b);

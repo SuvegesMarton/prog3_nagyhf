@@ -15,6 +15,10 @@ import javax.swing.event.DocumentListener;
 
 import grid.Grid;
 
+/**
+ * parent class implementing the basics of the graphical representation and manipulation interface of a sudoku grid.
+ */
+
 public class GridGui {
     protected Grid grid;
     protected final int gridBase;
@@ -23,13 +27,17 @@ public class GridGui {
     protected JTextField bottomTextField;
     protected boolean userInput = true;
 
-
+    /**
+     * sets the most important details of the represented grid.
+     */
     public GridGui(Grid grid) {
         this.grid = grid;
         gridBase = this.grid.getGridSizeBase();
         gridSize = gridBase*gridBase;
     }
-
+    /**
+     * lcreates general interface, leaving the mode-specific features to be added by separate functions overwritten later.
+     */
     public void makeWindow() {
         // Create the main window (JFrame)
         JFrame frame = new JFrame("Sudoku - Grid ID: " + grid.getID());
@@ -99,9 +107,14 @@ public class GridGui {
         this.updateGUI();
     }
 
+    /**
+     * will be overwritten by children classes
+     */
     protected void updateGUI() {}
 
-    //update only grid.values. updating gui is another step!
+    /**
+     * gets called when the grid is updated. this func updates the stored grid's values, not the interface. this function includes input validation.
+     */
     protected void handleGridUpdate (DocumentEvent e) {
         // Get the updated component (JTextField)
         JTextField updatedCell = (JTextField) e.getDocument().getProperty("owner");
@@ -118,8 +131,12 @@ public class GridGui {
         if (!Character.isDigit(c)) {this.grid.setValue(row, col, 0); return;}
         this.grid.setValue(row, col, c - '0');
     }
-
+    /**
+     * will be overwritten by children classes
+     */
     protected void addControlBar(JFrame frame) {}
-
+    /**
+     * will be overwritten by children classes
+     */
     protected void buttonClicked() {}
 }

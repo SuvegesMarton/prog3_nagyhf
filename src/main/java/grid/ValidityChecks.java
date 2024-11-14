@@ -2,8 +2,13 @@ package grid;
 
 import java.util.HashSet;
 import java.util.Set;
-
+/**
+ * class with static functions to determine if a grid meets the sudoku rules
+ */
 public class ValidityChecks {
+	/**
+ 	* determines if the column-rule of sudoku is met by the provided grid
+ 	*/
     public static boolean checkColumnRule(Grid g) {
         int sideLength = g.getGridSizeBase()*g.getGridSizeBase();
 		//check columns
@@ -23,7 +28,9 @@ public class ValidityChecks {
         return true;
     }
 
-
+	/**
+ 	* determines if the row-rule of sudoku is met by the provided grid
+ 	*/
     public static boolean checkRowRule(Grid g) {
         int sideLength = g.getGridSizeBase()*g.getGridSizeBase();
 		//check rows
@@ -43,7 +50,9 @@ public class ValidityChecks {
         return true;
     }
 
-
+	/**
+ 	* determines if the box-rule of sudoku is met by the provided grid
+ 	*/
     public static boolean checkBoxRule(Grid g) {
         int gsb = g.getGridSizeBase();
         int sideLength = gsb*gsb;
