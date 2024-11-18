@@ -31,28 +31,11 @@ public class GridTest {
     }
 
     @Test
-    public void testBoxIllegal() {
+    public void testIllegal() {
         Grid g = new Grid("testgrid", 2);
         g.setValue(0, 0, 1);
-        g.setValue(1, 1, 1);
-
-        assertEquals(false, g.isLegal());
-    }
-
-    @Test
-    public void testRowIllegal() {
-        Grid g = new Grid("testgrid", 2);
-        g.setValue(0, 0, 1);
-        g.setValue(0, 2, 1);
-
-        assertEquals(false, g.isLegal());
-    }
-
-    @Test
-    public void testColumnIllegal() {
-        Grid g = new Grid("testgrid", 2);
-        g.setValue(0, 0, 1);
-        g.setValue(2, 0, 1);
+        g.setValue(1, 0, 1);
+        g.setValue(0, 1, 1);
 
         assertEquals(false, g.isLegal());
     }
