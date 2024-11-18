@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import grid.Grid;
 
-public class GridTest {
+public class GridJsonIOTest {
     @Test
     public void testInitialization() {
         Grid g = new Grid("testgrid");
