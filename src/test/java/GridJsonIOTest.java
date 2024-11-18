@@ -1,60 +1,32 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 import grid.Grid;
+import grid.GridJsonIO;
 
 public class GridJsonIOTest {
     @Test
-    public void testInitialization() {
-        Grid g = new Grid("testgrid");
-        assertEquals(3, g.getGridSizeBase());
+    public void testSizeHolding() {
+        Grid in = new Grid("testgrid", 2);
+        GridJsonIO.saveToJSON(in);
+        Grid out = GridJsonIO.loadFromJSON("testgrid");
+        assertEquals(2, out.getGridSizeBase());  
+    }
+    
+    public void testValueHolding() {
+        Grid in = new Grid("testgrid", 2);
+        in.setValue(0, 0, 3);
+        GridJsonIO.saveToJSON(in);
+        Grid out = GridJsonIO.loadFromJSON("testgrid");
+        assertEquals(3, out.getValue(0, 0));  
     }
 
     @Test
-    public void testSetValue() {
-        Grid g = new Grid("testgrid");
-        g.setValue(3, 4, 5);
-        assertEquals(5, g.getValue(3,4));
+    public void testHardcodingHolding() {
+        Grid in = new Grid("testgrid", 2);
+        in.setIsHardCoded(0, 0, true);
+        GridJsonIO.saveToJSON(in);
+        Grid out = GridJsonIO.loadFromJSON("testgrid");
+        assertEquals(true, out.getIsHardCoded(0, 0));
     }
-
-    @Test
-    public void testSetValue2() {
-        Grid g = new Grid("testgrid", 2);
-        assertThrows(IllegalArgumentException.class, ()->{g.setValue(3, 4, 5);});
-    }
-
-    @Test
-    public void testEmptyLegal() {
-        Grid g = new Grid("testgrid", 2);
-        assertEquals(true, g.isLegal());
-    }
-
-    @Test
-    public void testBoxIllegal() {
-        Grid g = new Grid("testgrid", 2);
-        g.setValue(0, 0, 1);
-        g.setValue(1, 1, 1);
-
-        assertEquals(false, g.isLegal());
-    }
-
-    @Test
-    public void testRowIllegal() {
-        Grid g = new Grid("testgrid", 2);
-        g.setValue(0, 0, 1);
-        g.setValue(0, 2, 1);
-
-        assertEquals(false, g.isLegal());
-    }
-
-    @Test
-    public void testColumnIllegal() {
-        Grid g = new Grid("testgrid", 2);
-        g.setValue(0, 0, 1);
-        g.setValue(2, 0, 1);
-
-        assertEquals(false, g.isLegal());
-    }
-
 }
