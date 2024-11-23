@@ -18,6 +18,7 @@ import grid.GridJsonIO;
  * GUI and backend operations for editing and saving a sudoku puzzle/grid.
  */
 public class EditGui extends GridGui {
+    JButton button;
     public EditGui(Grid grid) {
         super(grid);
     }
@@ -63,7 +64,7 @@ public class EditGui extends GridGui {
             });
 
             // Add a button
-            JButton button = new JButton("Save");
+            button = new JButton("Save");
             controlPanel.add(button);
             button.addActionListener(new ActionListener() {
                 @Override
@@ -93,6 +94,9 @@ public class EditGui extends GridGui {
         String saveID = this.bottomTextField.getText();
         this.grid.setID(saveID);
         GridJsonIO io = new GridJsonIO();
-        io.saveToJSON(this.grid);
+        if(!io.saveToJSON(this.grid)) {
+            button.setText("Save failed...");
+            button.setEnabled(false);
+        }
     }
 }

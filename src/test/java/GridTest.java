@@ -12,6 +12,18 @@ public class GridTest {
     }
 
     @Test
+    public void testValueInit() {
+        Grid g = new Grid("testgrid");
+        assertEquals(0, g.getValue(0, 0));
+    }
+
+    @Test
+    public void testHardcodedInit() {
+        Grid g = new Grid("testgrid");
+        assertEquals(false, g.getIsHardCoded(0, 0));
+    }
+
+    @Test
     public void testSetValue() {
         Grid g = new Grid("testgrid");
         g.setValue(3, 4, 5);
@@ -22,6 +34,13 @@ public class GridTest {
     public void testSetValue2() {
         Grid g = new Grid("testgrid", 2);
         assertThrows(IllegalArgumentException.class, ()->{g.setValue(3, 4, 5);});
+    }
+
+    @Test
+    public void testXYtoScalar() {
+        Grid g = new Grid("testgrid", 3);
+        g.xyToScalar(1, 1);
+        assertEquals(10, g.xyToScalar(1, 1));
     }
 
     @Test

@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -17,9 +19,9 @@ public class GridJsonIO {
     private static final String ioFilePath = "src/main/resources/stored_grids.json";
 
     /**
-     * save a grid to a json file. if a grid with that name is already saved, overwrite it.
+     * save a grid to a json file. if a grid with that name is already saved, overwrite it. If the file does not exist, create a new empty file and save the grid in it.
      */
-    public static void saveToJSON(Grid grid) {
+    public static boolean saveToJSON(Grid grid) {
 		try {
             // Create Gson instance
             Gson gson = new Gson();
@@ -46,12 +48,14 @@ public class GridJsonIO {
             FileWriter writer = new FileWriter(ioFilePath);
             gson.toJson(grids, writer);
             writer.close();
+            return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            return false;
         }
 	}
     /**
-     * load a grid from a JSON file. If a grid with the specified name does not exist, create a new grid (3x3 grid size base) with the given name.
+     * load a grid from a JSON file. If a grid with the specified name does not exist, create a new standard grid (3x3 grid size base) with the given name.
+     * If the file does not exists, also return the default grid.
      */
     public static Grid loadFromJSON(String id) {
         try {
@@ -59,6 +63,10 @@ public class GridJsonIO {
             Gson gson = new Gson();
 
             // Read the JSON array from file and convert it to a list of Grid objects
+            File file = new File(ioFilePath); // ensure the file exists
+            if (!file.exists()) {
+                return new Grid(id, 3);
+            }
             FileReader reader = new FileReader(ioFilePath);
             List<Grid> grids = gson.fromJson(reader, gridListType);
             reader.close();

@@ -14,8 +14,9 @@ import javax.swing.JTextField;
 
 import grid.Grid;
 import grid.GridJsonIO;
-
-import gui.*;
+import gui.EditGui;
+import gui.GridGui;
+import gui.SolveGui;
 
 /**
  * This class creates and manages the game menu GUI. it inherist form the JFrame class for the sake of simplicity.
@@ -45,7 +46,7 @@ public class GuiMenu extends JFrame {
         buttonPanel.add(button2);
 
         // Create a label to display the text (non-editable and centered)
-        JLabel displayLabel = new JLabel("<html>Enter map name below to solve / edit grids.<br>If it does not exist yet, it will be created now.</html>", JLabel.CENTER);
+        JLabel displayLabel = new JLabel("<html>Enter puzzle name below to solve / edit grids.<br>If it does not exist yet, it will be created now.</html>", JLabel.CENTER);
         
         // Optionally set some padding or border for visual clarity
         displayLabel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));  // Add padding

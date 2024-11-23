@@ -9,6 +9,7 @@ package grid;
 public class Grid {
 	private String id;
 	private final int gridSizeBase;
+	private final int numberOfFields;
 	private int[] values;
 	private boolean[] isHardcoded;
 	/**
@@ -18,7 +19,7 @@ public class Grid {
 	public Grid(String id, int gridSizeBase) {
 		this.id = id;
 		this.gridSizeBase = gridSizeBase;
-		int numberOfFields = (int)Math.pow(gridSizeBase, 4);
+		this.numberOfFields = (int)Math.pow(gridSizeBase, 4);
 		this.values = new int[numberOfFields];
 		this.isHardcoded = new boolean[numberOfFields];
 	}
@@ -28,7 +29,7 @@ public class Grid {
 	public Grid(String id) {
 		this.id = id;
 		this.gridSizeBase = 3;
-		int numberOfFields = (int)Math.pow(gridSizeBase, 4);
+		this.numberOfFields = (int)Math.pow(gridSizeBase, 4);
 		this.values = new int[numberOfFields];
 		this.isHardcoded = new boolean[numberOfFields];
 	}
@@ -36,7 +37,7 @@ public class Grid {
 	 * gets xy coordinates on the sudoku grid
 	 * @return scalar value, more fit for using with the grids internal representation.
 	 */
-	private int xyToScalar(int x, int y) {
+	public int xyToScalar(int x, int y) {
 		return y*this.gridSizeBase*this.gridSizeBase + x;
 	}
 
@@ -48,7 +49,7 @@ public class Grid {
 		return this.gridSizeBase;
 	}
 
-	public int getValue(int x, int y) {
+	public int getValue(int x, int y){
 		return this.values[xyToScalar(x, y)];
 	}
 	

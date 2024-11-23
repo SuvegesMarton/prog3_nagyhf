@@ -129,7 +129,9 @@ public class GridGui {
         if (newValue.length() == 0) {this.grid.setValue(row, col, 0); return;}
         char c = newValue.charAt(newValue.length() - 1);
         if (!Character.isDigit(c)) {this.grid.setValue(row, col, 0); return;}
-        this.grid.setValue(row, col, c - '0');
+        int n = Integer.valueOf(newValue);
+        if (n>gridBase*gridBase) {this.grid.setValue(row, col, 0); return;}
+        this.grid.setValue(row, col, n);
     }
     /**
      * will be overwritten by children classes

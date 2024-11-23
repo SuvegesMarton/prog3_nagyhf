@@ -1,5 +1,4 @@
 package main;
-
 /**
  * Main class for starting up the game menu GUI.
  */
