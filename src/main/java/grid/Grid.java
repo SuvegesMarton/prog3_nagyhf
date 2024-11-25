@@ -1,4 +1,6 @@
 package grid;
+
+import java.util.ArrayList;
 /**
  * This class holds all attributes for a single Grid (one specific sudoku puzzle).
  * name/id - string name of the grid
@@ -10,8 +12,8 @@ public class Grid {
 	private String id;
 	private final int gridSizeBase;
 	private final int numberOfFields;
-	private int[] values;
-	private boolean[] isHardcoded;
+	private ArrayList<Integer> values = new ArrayList<>();
+	private ArrayList<Boolean> isHardcoded = new ArrayList<>();
 	/**
 	 * @param id name of the puzzle
 	 * @param gridSizeBase the default, well-known sudoku is based on 3x3 boxes, and 3x3 of these boxes. This implementation lets the grid size base number be other numbers aswell, not just 3.
@@ -20,8 +22,8 @@ public class Grid {
 		this.id = id;
 		this.gridSizeBase = gridSizeBase;
 		this.numberOfFields = (int)Math.pow(gridSizeBase, 4);
-		this.values = new int[numberOfFields];
-		this.isHardcoded = new boolean[numberOfFields];
+		for (int i=0;i<numberOfFields;i++) values.add(0);
+		for (int i=0;i<numberOfFields;i++) isHardcoded.add(false);
 	}
 	/**
 	 * @param id name of the puzzle
@@ -30,8 +32,8 @@ public class Grid {
 		this.id = id;
 		this.gridSizeBase = 3;
 		this.numberOfFields = (int)Math.pow(gridSizeBase, 4);
-		this.values = new int[numberOfFields];
-		this.isHardcoded = new boolean[numberOfFields];
+		for (int i=0;i<numberOfFields;i++) values.add(0);
+		for (int i=0;i<numberOfFields;i++) isHardcoded.add(false);
 	}
 	/**
 	 * gets xy coordinates on the sudoku grid
@@ -50,22 +52,22 @@ public class Grid {
 	}
 
 	public int getValue(int x, int y){
-		return this.values[xyToScalar(x, y)];
+		return this.values.get(xyToScalar(x, y));
 	}
 	
 	public boolean getIsHardCoded(int x, int y) {
-		return this.isHardcoded[xyToScalar(x, y)];
+		return this.isHardcoded.get(xyToScalar(x, y));
 	}
 
 	public void setValue(int x, int y, int newValue) {
 		if (newValue<0 || this.gridSizeBase*this.gridSizeBase<newValue) {
 			throw new IllegalArgumentException("Field value out of the legal domain.");
 		}
-		this.values[xyToScalar(x, y)] = newValue;
+		this.values.set(xyToScalar(x, y), newValue);
 	}
 	
 	public void setIsHardCoded(int x, int y, boolean newSetting) {
-		this.isHardcoded[xyToScalar(x, y)] = newSetting;
+		this.isHardcoded.set(xyToScalar(x, y), newSetting);
 	}
 
 	public void setID(String newID) {

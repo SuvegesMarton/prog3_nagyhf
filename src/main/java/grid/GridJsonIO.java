@@ -19,7 +19,7 @@ public class GridJsonIO {
     private static final String ioFilePath = "src/main/resources/stored_grids.json";
 
     /**
-     * save a grid to a json file. if a grid with that name is already saved, overwrite it. If the file does not exist, create a new empty file and save the grid in it.
+     * save a grid to a json file. if a grid with that name is already saved, overwrite it. If the file does not exist, return false->gui will show that saving the file failed.
      */
     public static boolean saveToJSON(Grid grid) {
 		try {
